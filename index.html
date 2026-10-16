@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarMarket - Premium Auto Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader-content">
+            <div class="loader-car">
+                <i class="fas fa-car-side"></i>
+            </div>
+            <div class="loader-text">
+                <span>C</span><span>A</span><span>R</span><span>M</span><span>A</span><span>R</span><span>K</span><span>E</span><span>T</span>
+            </div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-car-side"></i>
+                </div>
+                <span>CarMarket</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#brands">Brands</a></li>
+                <li><a href="#cars">Cars</a></li>
+                <li><a href="#compare">Compare</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="btn-icon" id="wishlistBtn">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlistCount">0</span>
+                </button>
+                <button class="btn-outline" id="loginBtn">
+                    <i class="fas fa-user"></i>
+                    <span>Sign In</span>
+                </button>
+                <button class="btn-primary" id="startBtn">
+                    <span>Get Started</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-particles" id="particles"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge animate-in">
+                    <i class="fas fa-award"></i>
+                    <span>#1 Auto Platform in the Region</span>
+                </div>
+                <h1 class="hero-title animate-in">
+                    Find Your <span class="gradient-text">Dream Car</span>
+                </h1>
+                <p class="hero-subtitle animate-in">
+                    Compare thousands of vehicles and get the best deals from certified dealers
+                </p>
+                
+                <div class="hero-stats animate-in">
+                    <div class="stat">
+                        <div class="stat-number" data-target="1500">0</div>
+                        <div class="stat-label">Available Cars</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="250">0</div>
+                        <div class="stat-label">Certified Dealers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-label">Top Brands</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">Customer Satisfaction</div>
+                    </div>
+                </div>
+                
+                <div class="search-box animate-in">
+                    <div class="search-form" id="buy-form">
+                        <div class="form-group">
+                            <label><i class="fas fa-car"></i> Brand</label>
+                            <select class="search-select" id="brand-select">
+                                <option value="">Select Brand</option>
+                                <option value="Toyota">Toyota</option>
+                                <option value="Mercedes">Mercedes</option>
+                                <option value="BMW">BMW</option>
+                                <option value="Hyundai">Hyundai</option>
+                                <option value="Nissan">Nissan</option>
+                                <option value="Kia">Kia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-car-side"></i> Model</label>
+                            <select class="search-select" id="model-select">
+                                <option value="">Select Model</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Year</label>
+                            <select class="search-select" id="year-select">
+                                <option value="">Year</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                        <button class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                            <span>Search</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <span>Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands" id="brands-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Top Brands</span>
+                <h2>Browse by <span class="gradient-text">Brand</span></h2>
+                <p>Choose from the world's most prestigious automotive brands</p>
+            </div>
+            <div class="brands-grid" id="brands-grid"></div>
+        </div>
+    </section>
+
+    <!-- Featured Cars -->
+    <section class="featured" id="featured-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Featured</span>
+                <h2>Premium <span class="gradient-text">Selection</span></h2>
+                <p>Handpicked vehicles with the best deals</p>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" data-filter="all">All Cars</button>
+                <button class="filter-btn" data-filter="New">New</button>
+                <button class="filter-btn" data-filter="Used">Used</button>
+            </div>
+            <div class="cars-grid" id="cars-grid"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Why Us</span>
+                <h2>Why Choose <span class="gradient-text">CarMarket</span>?</h2>
+                <p>We deliver an unmatched car buying experience</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Quality Assurance</h3>
+                    <p>All vehicles inspected and certified by expert specialists</p>
+                    <div class="feature-number">01</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h3>Best Prices</h3>
+                    <p>Compare offers and get the best market price</p>
+                    <div class="feature-number">02</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                    <h3>24/7 Support</h3>
+                    <p>Our team is ready to assist you anytime through multiple channels</p>
+                    <div class="feature-number">03</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
+                    <h3>Fast Delivery</h3>
+                    <p>We deliver your car to your doorstep in the shortest time</p>
+                    <div class="feature-number">04</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison" id="compare-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Compare</span>
+                <h2>Compare <span class="gradient-text">Vehicles</span></h2>
+                <p>Select two or three cars to compare side by side</p>
+            </div>
+            <div class="comparison-slots">
+                <div class="slot" id="slot-1" data-slot="1">
+                    <div class="slot-placeholder"><i class="fas fa-plus-circle"></i><span>Add Car</span></div>
+                </div>
+                <div class="slot" id="slot-2" data-slot="2">
+                    <div class="slot-placeholder"><i class="fas fa-plus-circle"></i><span>Add Car</span></div>
+                </div>
+                <div class="slot" id="slot-3" data-slot="3">
+                    <div class="slot-placeholder"><i class="fas fa-plus-circle"></i><span>Add Car</span></div>
+                </div>
+            </div>
+            <button class="btn-primary compare-btn" id="compareBtn">
+                <i class="fas fa-balance-scale"></i>
+                <span>Start Comparison</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="reviews">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Testimonials</span>
+                <h2>What Our <span class="gradient-text">Clients Say</span></h2>
+                <p>Real experiences from our valued customers</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"Amazing experience! I found my dream car at an excellent price. The platform is easy to use and the support is outstanding."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"><i class="fas fa-user"></i></div>
+                        <div class="author-info">
+                            <h4>Ahmed Mohammed</h4>
+                            <span>Riyadh</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card featured">
+                    <div class="testimonial-badge">Featured</div>
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"The best platform for buying and selling cars. Comparing vehicles helped me make the right decision with confidence."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"><i class="fas fa-user"></i></div>
+                        <div class="author-info">
+                            <h4>Sarah Al-Ali</h4>
+                            <span>Jeddah</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"Excellent service and high-quality vehicles. I recommend this platform to everyone looking for their next car."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"><i class="fas fa-user"></i></div>
+                        <div class="author-info">
+                            <h4>Khalid Al-Saeed</h4>
+                            <span>Dammam</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2><i class="fas fa-envelope"></i> Subscribe to Our Newsletter</h2>
+                    <p>Get the latest deals and new cars delivered to your inbox</p>
+                </div>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Your email address" id="emailInput">
+                    <button class="btn-primary" id="subscribeBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Subscribe</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3><i class="fas fa-car-side"></i> CarMarket</h3>
+                    <p>Your premier destination for buying and selling cars in the region. We provide the best experience possible.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Buy a Car</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Sell a Car</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Financing</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Insurance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +920 000 000</li>
+                        <li><i class="fas fa-envelope"></i> info@carmarket.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Riyadh, Saudi Arabia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 CarMarket. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="carModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+    <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

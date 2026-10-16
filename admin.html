@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>لوحة إدارة CarMarket</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body { font-family: 'Cairo', sans-serif; padding: 20px; background: #f5f5f5; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { background: #0066ff; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0052cc; }
+        .success { background: #28a745; }
+        .preview { max-width: 300px; margin-top: 10px; border-radius: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🚗 إضافة سيارة جديدة</h1>
+    
+    <form id="addCarForm">
+        <div class="form-group">
+            <label>الماركة</label>
+            <select id="brand" required>
+                <option value="تويوتا">تويوتا</option>
+                <option value="مرسيدس">مرسيدس</option>
+                <option value="BMW">BMW</option>
+                <option value="هيونداي">هيونداي</option>
+                <option value="نيسان">نيسان</option>
+                <option value="كيا">كيا</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>الموديل</label>
+            <input type="text" id="model" required>
+        </div>
+        
+        <div class="form-group">
+            <label>السعر</label>
+            <input type="number" id="price" required>
+        </div>
+        
+        <div class="form-group">
+            <label>السنة</label>
+            <input type="number" id="year" required>
+        </div>
+        
+        <div class="form-group">
+            <label>الممشى (كم)</label>
+            <input type="number" id="mileage" required>
+        </div>
+        
+        <div class="form-group">
+            <label>نوع الوقود</label>
+            <select id="fuel">
+                <option>بنزين</option>
+                <option>ديزل</option>
+                <option>كهرباء</option>
+                <option>هجين</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>ناقل الحركة</label>
+            <select id="transmission">
+                <option>أوتوماتيك</option>
+                <option>يدوي</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>التاجر</label>
+            <input type="text" id="dealer" required>
+        </div>
+        
+        <div class="form-group">
+            <label>التقييم (1-5)</label>
+            <input type="number" id="rating" min="1" max="5" step="0.1" required>
+        </div>
+        
+        <div class="form-group">
+            <label>الحالة</label>
+            <select id="badge">
+                <option>جديدة</option>
+                <option>مستعملة</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>صورة السيارة</label>
+            <input type="file" id="carImage" accept="image/*" required>
+            <img id="imagePreview" class="preview" style="display:none;">
+        </div>
+        
+        <div class="form-group">
+            <label>المميزات (مفصولة بفاصلة)</label>
+            <textarea id="features" placeholder="تكييف, بلوتوث, كاميرا"></textarea>
+        </div>
+        
+        <button type="submit">➕ إضافة السيارة</button>
+    </form>
+
+    <script src="config.js"></script>
+    <script>
+        // معاينة الصورة
+        document.getElementById('carImage').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // إضافة السيارة
+        document.getElementById('addCarForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const imageFile = document.getElementById('carImage').files[0];
+            const brand = document.getElementById('brand').value;
+            const model = document.getElementById('model').value;
+            const fileName = `${brand}-${model}-${Date.now()}.jpg`;
+            
+            try {
+                // 1. رفع الصورة
+                const { data: uploadData, error: uploadError } = await supabase
+                    .storage
+                    .from('car-images')
+                    .upload(fileName, imageFile);
+                
+                if (uploadError) throw uploadError;
+                
+                // 2. الحصول على رابط الصورة
+                const { data: { publicUrl } } = supabase
+                    .storage
+                    .from('car-images')
+                    .getPublicUrl(fileName);
+                
+                // 3. إضافة السيارة لقاعدة البيانات
+                const { error: dbError } = await supabase
+                    .from('cars')
+                    .insert([{
+                        brand: brand,
+                        model: model,
+                        price: parseFloat(document.getElementById('price').value),
+                        year: parseInt(document.getElementById('year').value),
+                        mileage: parseInt(document.getElementById('mileage').value),
+                        fuel: document.getElementById('fuel').value,
+                        transmission: document.getElementById('transmission').value,
+                        dealer: document.getElementById('dealer').value,
+                        rating: parseFloat(document.getElementById('rating').value),
+                        badge: document.getElementById('badge').value,
+                        image_url: publicUrl,
+                        features: document.getElementById('features').value.split(',').map(f => f.trim())
+                    }]);
+                
+                if (dbError) throw dbError;
+                
+                alert('✅ تمت إضافة السيارة بنجاح!');
+                document.getElementById('addCarForm').reset();
+                document.getElementById('imagePreview').style.display = 'none';
+                
+            } catch (error) {
+                console.error(error);
+                alert('❌ حدث خطأ: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
