@@ -1,5 +1,8 @@
-// ========== Base Path ==========
-const BASE_PATH = 'http://127.0.0.1:5500';
+const GITHUB_USERNAME = 'osman-husam';
+const GITHUB_REPOSITORY = 'carmarket';
+const GITHUB_BRANCH = 'main';
+
+const GITHUB_RAW = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/${GITHUB_BRANCH}`;
 
 // ========== Global Variables ==========
 let carsData = [];
@@ -12,7 +15,7 @@ let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 const cursor = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursorFollower');
 
-if (window.innerWidth > 768) {
+if (window.innerWidth > 768 && cursor && cursorFollower) {
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
@@ -48,52 +51,52 @@ setTimeout(() => {
     if (preloader && !preloader.classList.contains('hidden')) preloader.classList.add('hidden');
 }, 3000);
 
-// ========== Local Brands Data ==========
+// ========== Local Brands Data (من GitHub) ==========
 const localBrandsData = [
-    { name: 'Toyota', count: 245, logo: `${BASE_PATH}/images/logos/toyota.png` },
-    { name: 'Mercedes', count: 189, logo: `${BASE_PATH}/images/logos/mercedes.png` },
-    { name: 'BMW', count: 156, logo: `${BASE_PATH}/images/logos/bmw.png` },
-    { name: 'Hyundai', count: 198, logo: `${BASE_PATH}/images/logos/hyundai.png` },
-    { name: 'Nissan', count: 134, logo: `${BASE_PATH}/images/logos/nissan.png` },
-    { name: 'Kia', count: 167, logo: `${BASE_PATH}/images/logos/kia.png` }
+    { name: 'Toyota', count: 245, logo: `${GITHUB_RAW}/images/logos/toyota.png` },
+    { name: 'Mercedes', count: 189, logo: `${GITHUB_RAW}/images/logos/mercedes.png` },
+    { name: 'BMW', count: 156, logo: `${GITHUB_RAW}/images/logos/bmw.png` },
+    { name: 'Hyundai', count: 198, logo: `${GITHUB_RAW}/images/logos/hyundai.png` },
+    { name: 'Nissan', count: 134, logo: `${GITHUB_RAW}/images/logos/nissan.png` },
+    { name: 'Kia', count: 167, logo: `${GITHUB_RAW}/images/logos/kia.png` }
 ];
 
-// ========== Local Cars Data ==========
+// ========== Local Cars Data (من GitHub) ==========
 const localCarsData = [
     { 
         id: 1, brand: 'Toyota', model: 'Camry 2024', price: 95000, year: 2024, mileage: 0, 
         fuel: 'Gasoline', transmission: 'Automatic', dealer: 'Al-Nojoom Showroom', rating: 4.8, badge: 'New', 
-        image: `${BASE_PATH}/images/cars/camry.jpg`, 
+        image: `${GITHUB_RAW}/images/cars/camry.jpg`, 
         features: ['Air Conditioning', 'Bluetooth', 'Rear Camera', 'Sensors'] 
     },
     { 
         id: 2, brand: 'Mercedes', model: 'C200 2023', price: 185000, year: 2023, mileage: 15000, 
         fuel: 'Gasoline', transmission: 'Automatic', dealer: 'Luxury Showroom', rating: 4.9, badge: 'Used', 
-        image: `${BASE_PATH}/images/cars/mercedes.jpg`, 
+        image: `${GITHUB_RAW}/images/cars/mercedes.jpg`, 
         features: ['Sunroof', 'Leather Seats', 'Navigation', 'Power Seats'] 
     },
     { 
         id: 3, brand: 'BMW', model: 'X5 2024', price: 220000, year: 2024, mileage: 0, 
         fuel: 'Gasoline', transmission: 'Automatic', dealer: 'BMW Official Showroom', rating: 4.7, badge: 'New', 
-        image: `${BASE_PATH}/images/cars/bmw.jpg`, 
+        image: `${GITHUB_RAW}/images/cars/bmw.jpg`, 
         features: ['4WD', 'Large Screen', 'Premium Sound System'] 
     },
     { 
         id: 4, brand: 'Hyundai', model: 'Tucson 2023', price: 78000, year: 2023, mileage: 25000, 
         fuel: 'Gasoline', transmission: 'Automatic', dealer: 'Gulf Showroom', rating: 4.6, badge: 'Used', 
-        image: `${BASE_PATH}/images/cars/hyundai.jpg`, 
+        image: `${GITHUB_RAW}/images/cars/hyundai.jpg`, 
         features: ['Air Conditioning', 'Bluetooth', 'Sensors'] 
     },
     { 
         id: 5, brand: 'Nissan', model: 'Patrol 2024', price: 165000, year: 2024, mileage: 0, 
         fuel: 'Gasoline', transmission: 'Automatic', dealer: 'Nissan Showroom', rating: 4.8, badge: 'New', 
-        image: `${BASE_PATH}/images/cars/nissan.jpg`, 
+        image: `${GITHUB_RAW}/images/cars/nissan.jpg`, 
         features: ['4WD', '7 Seats', 'Rear AC'] 
     },
     { 
         id: 6, brand: 'Kia', model: 'Sorento 2023', price: 92000, year: 2023, mileage: 18000, 
         fuel: 'Diesel', transmission: 'Automatic', dealer: 'Kia Showroom', rating: 4.5, badge: 'Used', 
-        image: `${BASE_PATH}/images/cars/kia.jpg`, 
+        image: `${GITHUB_RAW}/images/cars/kia.jpg`, 
         features: ['7 Seats', '360 Camera', 'Advanced Safety'] 
     }
 ];
@@ -101,7 +104,7 @@ const localCarsData = [
 // ========== Page Load ==========
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Starting CarMarket...');
-    console.log('📁 Base Path:', BASE_PATH);
+    console.log('📁 GitHub Raw Base:', GITHUB_RAW);
     
     carsData = localCarsData;
     brandsData = localBrandsData;
