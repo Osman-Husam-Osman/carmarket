@@ -1,17 +1,19 @@
+// ========== إعدادات GitHub Raw (تم تعبئة بياناتك تلقائياً) ==========
 const GITHUB_USERNAME = 'Osman-Husam-Osman';
 const GITHUB_REPOSITORY = 'carmarket';
 const GITHUB_BRANCH = 'main';
 
+// هذا الرابط هو الذي سيجلب الصور بشكل صحيح للموقع
 const GITHUB_RAW = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${GITHUB_REPOSITORY}/${GITHUB_BRANCH}`;
 
-// ========== Global Variables ==========
+// ========== المتغيرات العامة ==========
 let carsData = [];
 let brandsData = [];
 let selectedCars = [];
 let currentFilter = 'all';
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
-// ========== Custom Cursor ==========
+// ========== مؤشر الماوس المخصص ==========
 const cursor = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursorFollower');
 
@@ -19,7 +21,6 @@ if (window.innerWidth > 768 && cursor && cursorFollower) {
     document.addEventListener('mousemove', (e) => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top = e.clientY + 'px';
-        
         setTimeout(() => {
             cursorFollower.style.left = e.clientX - 15 + 'px';
             cursorFollower.style.top = e.clientY - 15 + 'px';
@@ -29,16 +30,14 @@ if (window.innerWidth > 768 && cursor && cursorFollower) {
     document.querySelectorAll('a, button, .car-card, .brand-card').forEach(el => {
         el.addEventListener('mouseenter', () => {
             cursorFollower.style.transform = 'scale(1.5)';
-            cursorFollower.style.borderColor = 'var(--primary)';
         });
         el.addEventListener('mouseleave', () => {
             cursorFollower.style.transform = 'scale(1)';
-            cursorFollower.style.borderColor = 'var(--primary)';
         });
     });
 }
 
-// ========== Hide Preloader ==========
+// ========== إخفاء شاشة التحميل ==========
 window.addEventListener('load', () => {
     setTimeout(() => {
         const preloader = document.getElementById('preloader');
@@ -46,12 +45,7 @@ window.addEventListener('load', () => {
     }, 1500);
 });
 
-setTimeout(() => {
-    const preloader = document.getElementById('preloader');
-    if (preloader && !preloader.classList.contains('hidden')) preloader.classList.add('hidden');
-}, 3000);
-
-// ========== Local Brands Data (من GitHub) ==========
+// ========== بيانات الماركات (من GitHub) ==========
 const localBrandsData = [
     { name: 'Toyota', count: 245, logo: `${GITHUB_RAW}/images/logos/toyota.png` },
     { name: 'Mercedes', count: 189, logo: `${GITHUB_RAW}/images/logos/mercedes.png` },
@@ -61,7 +55,7 @@ const localBrandsData = [
     { name: 'Kia', count: 167, logo: `${GITHUB_RAW}/images/logos/kia.png` }
 ];
 
-// ========== Local Cars Data (من GitHub) ==========
+// ========== بيانات السيارات (من GitHub) ==========
 const localCarsData = [
     { 
         id: 1, brand: 'Toyota', model: 'Camry 2024', price: 95000, year: 2024, mileage: 0, 
@@ -101,16 +95,13 @@ const localCarsData = [
     }
 ];
 
-// ========== Page Load ==========
+// ========== تحميل الصفحة ==========
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('🚀 Starting CarMarket...');
-    console.log('📁 GitHub Raw Base:', GITHUB_RAW);
+    console.log('📁 الصور تُجلب من:', GITHUB_RAW);
     
     carsData = localCarsData;
     brandsData = localBrandsData;
-    
-    console.log(`✅ Loaded ${carsData.length} local cars`);
-    console.log(`✅ Loaded ${brandsData.length} local brands`);
     
     createParticles();
     loadBrands();
@@ -120,15 +111,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     animateStats();
     updateWishlistCount();
     initScrollReveal();
-    
-    console.log('✅ Website Ready!');
 });
 
-// ========== Create Particles ==========
+// ========== إنشاء الجزيئات المتحركة ==========
 function createParticles() {
     const particlesContainer = document.getElementById('particles');
     if (!particlesContainer) return;
-    
     for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         particle.style.position = 'absolute';
@@ -139,12 +127,11 @@ function createParticles() {
         particle.style.left = Math.random() * 100 + '%';
         particle.style.top = Math.random() * 100 + '%';
         particle.style.animation = `float ${Math.random() * 10 + 10}s infinite ease-in-out`;
-        particle.style.animationDelay = Math.random() * 5 + 's';
         particlesContainer.appendChild(particle);
     }
 }
 
-// ========== Load Brands ==========
+// ========== عرض الماركات ==========
 function loadBrands() {
     const grid = document.getElementById('brands-grid');
     if (!grid) return;
@@ -152,7 +139,7 @@ function loadBrands() {
         <div class="brand-card reveal" onclick="filterByBrand('${brand.name}')">
             <div class="brand-logo-container">
                 <img src="${brand.logo}" alt="${brand.name}" class="brand-logo-img" loading="lazy" 
-                     onerror="console.error('❌ Failed to load logo:', '${brand.logo}'); this.style.display='none'; this.parentElement.innerHTML='<div style=\\'font-size:40px;font-weight:bold;color:var(--primary);\\'>${brand.name.charAt(0)}</div>'">
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\\'font-size:40px;font-weight:bold;color:var(--primary);\\'>${brand.name.charAt(0)}</div>'">
             </div>
             <h3>${brand.name}</h3>
             <p>${brand.count} Cars</p>
@@ -160,7 +147,7 @@ function loadBrands() {
     `).join('');
 }
 
-// ========== Load Cars ==========
+// ========== عرض السيارات ==========
 function loadFeaturedCars(filter = 'all') {
     const grid = document.getElementById('cars-grid');
     if (!grid) return;
@@ -176,7 +163,7 @@ function loadFeaturedCars(filter = 'all') {
         <div class="car-card reveal" onclick="viewCar(${car.id})" style="animation: fadeInUp 0.6s ease ${index * 0.1}s both;">
             <div class="car-image">
                 <img src="${car.image}" alt="${car.brand} ${car.model}" 
-                     onerror="console.error('❌ Failed to load image:', '${car.image}'); this.src='https://via.placeholder.com/600x400/2563eb/ffffff?text=No+Image'">
+                     onerror="this.src='https://via.placeholder.com/600x400/2563eb/ffffff?text=No+Image'">
                 <span class="car-badge">${car.badge}</span>
                 <div class="car-favorite ${favorites.includes(car.id) ? 'active' : ''}" onclick="toggleFavorite(event, ${car.id})"><i class="fas fa-heart"></i></div>
             </div>
@@ -196,11 +183,10 @@ function loadFeaturedCars(filter = 'all') {
             </div>
         </div>
     `).join('');
-    
     setTimeout(() => initScrollReveal(), 100);
 }
 
-// ========== Filter by Brand ==========
+// ========== فلترة حسب الماركة ==========
 function filterByBrand(brand) {
     const filtered = carsData.filter(car => car.brand === brand);
     if (filtered.length === 0) { showNotification(`No cars from ${brand}`, 'warning'); return; }
@@ -233,7 +219,7 @@ function filterByBrand(brand) {
     setTimeout(() => initScrollReveal(), 100);
 }
 
-// ========== View Car Details ==========
+// ========== عرض تفاصيل السيارة ==========
 function viewCar(id) {
     const car = carsData.find(c => c.id === id);
     if (!car) return;
@@ -265,11 +251,11 @@ function viewCar(id) {
     modal.classList.add('active');
 }
 
-// ========== Close Modal ==========
+// ========== إغلاق النافذة المنبثقة ==========
 document.querySelector('.close-modal').addEventListener('click', () => document.getElementById('carModal').classList.remove('active'));
 document.getElementById('carModal').addEventListener('click', (e) => { if (e.target.id === 'carModal') document.getElementById('carModal').classList.remove('active'); });
 
-// ========== Favorites ==========
+// ========== المفضلة ==========
 function toggleFavorite(event, id) {
     event.stopPropagation();
     const index = favorites.indexOf(id);
@@ -285,7 +271,7 @@ function updateWishlistCount() {
     if (badge) badge.textContent = favorites.length;
 }
 
-// ========== Compare ==========
+// ========== المقارنة ==========
 function addToCompare(id) {
     const car = carsData.find(c => c.id === id);
     if (!car) return;
@@ -321,7 +307,7 @@ function removeFromCompare(index) {
     showNotification('Removed from comparison', 'warning');
 }
 
-// ========== Search ==========
+// ========== البحث ==========
 document.getElementById('searchBtn').addEventListener('click', () => {
     const brand = document.getElementById('brand-select').value;
     const year = document.getElementById('year-select').value;
@@ -360,7 +346,7 @@ document.getElementById('searchBtn').addEventListener('click', () => {
     setTimeout(() => initScrollReveal(), 100);
 });
 
-// ========== Filter Buttons ==========
+// ========== أزرار الفلترة ==========
 document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -370,7 +356,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     });
 });
 
-// ========== Other Buttons ==========
+// ========== أزرار أخرى ==========
 document.getElementById('startBtn').addEventListener('click', () => document.getElementById('buy-form').scrollIntoView({ behavior: 'smooth' }));
 document.getElementById('wishlistBtn').addEventListener('click', () => {
     if (favorites.length === 0) showNotification('Wishlist is empty', 'warning');
@@ -384,7 +370,7 @@ document.getElementById('subscribeBtn').addEventListener('click', () => {
 });
 function contactDealer(dealer) { showNotification(`Contacting ${dealer}`, 'success'); }
 
-// ========== Notification System ==========
+// ========== نظام الإشعارات ==========
 function showNotification(message, type = 'info') {
     const notif = document.getElementById('notification');
     notif.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i> <span>${message}</span>`;
@@ -393,7 +379,7 @@ function showNotification(message, type = 'info') {
     setTimeout(() => notif.classList.remove('show'), 3000);
 }
 
-// ========== Scroll Effects ==========
+// ========== تأثيرات التمرير ==========
 function initScrollEffects() {
     const navbar = document.querySelector('.navbar');
     const backToTop = document.getElementById('backToTop');
@@ -406,20 +392,17 @@ function initScrollEffects() {
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
-// ========== Scroll Reveal ==========
+// ========== ظهور العناصر عند التمرير ==========
 function initScrollReveal() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
+            if (entry.isIntersecting) entry.target.classList.add('active');
         });
     }, { threshold: 0.1 });
-    
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
-// ========== Animate Stats ==========
+// ========== عداد الأرقام ==========
 function animateStats() {
     const stats = document.querySelectorAll('.stat-number');
     const observer = new IntersectionObserver((entries) => {
@@ -445,7 +428,7 @@ function animateStats() {
     stats.forEach(stat => observer.observe(stat));
 }
 
-// ========== Event Listeners ==========
+// ========== مستمعي الأحداث ==========
 function initEventListeners() {
     document.getElementById('brand-select').addEventListener('change', function() {
         const brand = this.value;
