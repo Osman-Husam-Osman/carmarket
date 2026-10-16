@@ -1,4 +1,4 @@
-const GITHUB_USERNAME = 'osman-husam';
+const GITHUB_USERNAME = 'Osman-Husam-Osman';
 const GITHUB_REPOSITORY = 'carmarket';
 const GITHUB_BRANCH = 'main';
 
